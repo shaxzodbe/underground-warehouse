@@ -1,0 +1,76 @@
+2025-12-25 11:05:12,217 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 11:05:12,223 INFO supervisord started with pid 1
+2025-12-25 11:05:13,229 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 11:05:13,230 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 11:05:13,244 WARN exited: yii-queue-worker (exit status 255; not expected)
+2025-12-25 11:05:14,259 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:05:14,260 INFO spawned: 'yii-queue-worker' with pid 11
+2025-12-25 11:05:14,274 WARN exited: yii-queue-worker (exit status 255; not expected)
+2025-12-25 11:05:16,277 INFO spawned: 'yii-queue-worker' with pid 12
+2025-12-25 11:05:16,291 WARN exited: yii-queue-worker (exit status 255; not expected)
+2025-12-25 11:05:19,295 INFO spawned: 'yii-queue-worker' with pid 13
+2025-12-25 11:05:19,309 WARN exited: yii-queue-worker (exit status 255; not expected)
+2025-12-25 11:05:20,310 INFO gave up: yii-queue-worker entered FATAL state, too many start retries too quickly
+2025-12-25 11:08:47,528 WARN received SIGQUIT indicating exit request
+2025-12-25 11:08:47,529 INFO waiting for php-fpm to die
+2025-12-25 11:08:48,534 INFO stopped: php-fpm (exit status 0)
+2025-12-25 11:08:49,196 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 11:08:49,197 INFO supervisord started with pid 1
+2025-12-25 11:08:50,208 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 11:08:50,215 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 11:08:51,285 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:08:51,285 INFO success: yii-queue-worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:28:24,620 WARN received SIGQUIT indicating exit request
+2025-12-25 11:28:24,620 INFO waiting for php-fpm, yii-queue-worker to die
+2025-12-25 11:28:26,698 INFO stopped: yii-queue-worker (exit status 0)
+2025-12-25 11:28:27,703 INFO stopped: php-fpm (exit status 0)
+2025-12-25 11:28:28,351 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 11:28:28,353 INFO supervisord started with pid 1
+2025-12-25 11:28:29,359 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 11:28:29,361 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 11:28:30,449 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:28:30,449 INFO success: yii-queue-worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:30:56,470 WARN received SIGQUIT indicating exit request
+2025-12-25 11:30:56,470 INFO waiting for php-fpm, yii-queue-worker to die
+2025-12-25 11:30:56,547 INFO stopped: yii-queue-worker (exit status 0)
+2025-12-25 11:30:56,552 INFO stopped: php-fpm (exit status 0)
+2025-12-25 11:30:57,024 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 11:30:57,025 INFO supervisord started with pid 1
+2025-12-25 11:30:58,026 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 11:30:58,027 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 11:30:59,110 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:30:59,110 INFO success: yii-queue-worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:34:14,121 WARN received SIGQUIT indicating exit request
+2025-12-25 11:34:14,122 INFO waiting for php-fpm, yii-queue-worker to die
+2025-12-25 11:34:14,277 INFO stopped: yii-queue-worker (exit status 0)
+2025-12-25 11:34:14,281 INFO stopped: php-fpm (exit status 0)
+2025-12-25 11:34:14,655 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 11:34:14,656 INFO supervisord started with pid 1
+2025-12-25 11:34:15,661 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 11:34:15,662 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 11:34:16,749 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 11:34:16,750 INFO success: yii-queue-worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 12:42:23,228 WARN received SIGQUIT indicating exit request
+2025-12-25 12:42:23,228 INFO waiting for php-fpm, yii-queue-worker to die
+2025-12-25 12:42:23,459 INFO stopped: yii-queue-worker (exit status 0)
+2025-12-25 12:42:23,468 INFO stopped: php-fpm (exit status 0)
+2025-12-25 12:42:23,921 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 12:42:23,923 INFO supervisord started with pid 1
+2025-12-25 12:42:24,925 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 12:42:24,926 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 12:42:26,020 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 12:42:26,020 INFO success: yii-queue-worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 13:51:57,275 WARN received SIGQUIT indicating exit request
+2025-12-25 13:51:57,275 INFO waiting for php-fpm, yii-queue-worker to die
+2025-12-25 13:52:00,146 INFO stopped: yii-queue-worker (exit status 0)
+2025-12-25 13:52:00,151 INFO stopped: php-fpm (exit status 0)
+2025-12-25 13:52:00,781 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-12-25 13:52:00,785 INFO supervisord started with pid 1
+2025-12-25 13:52:01,791 INFO spawned: 'php-fpm' with pid 7
+2025-12-25 13:52:01,792 INFO spawned: 'yii-queue-worker' with pid 8
+2025-12-25 13:52:02,831 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 13:52:02,832 INFO success: yii-queue-worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-12-25 16:35:17,135 WARN received SIGQUIT indicating exit request
+2025-12-25 16:35:17,337 INFO waiting for php-fpm, yii-queue-worker to die
+2025-12-25 16:35:17,352 WARN stopped: yii-queue-worker (exit status 1)
+2025-12-25 16:35:17,376 INFO stopped: php-fpm (exit status 0)

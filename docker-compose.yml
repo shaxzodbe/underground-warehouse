@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: warehouse-backend
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_HOST=db
+      - DB_NAME=warehouse
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+    networks:
+      - warehouse-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: warehouse-frontend
+    ports:
+      - "3883:3883"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - VITE_API_URL=http://localhost:3884
+    networks:
+      - warehouse-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: warehouse-nginx
+    ports:
+      - "3884:80"
+    volumes:
+      - ./backend:/app
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - backend
+    networks:
+      - warehouse-network
+
+  db:
+    image: mariadb:10.6
+    container_name: warehouse-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=warehouse
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - "38306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - warehouse-network
+
+  redis:
+    image: redis:alpine
+    container_name: warehouse-redis
+    networks:
+      - warehouse-network
+
+networks:
+  warehouse-network:
+    driver: bridge
+
+volumes:
+  db-data:

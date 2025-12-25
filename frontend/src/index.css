@@ -1,0 +1,9 @@
+/* Reseting default styles to let MUI handle layout */
+body {
+  margin: 0;
+  padding: 0;
+  /* display: flex; REMOVED */
+  /* place-items: center; REMOVED */
+  /* min-width: 320px; REMOVED */
+  /* min-height: 100vh; REMOVED */
+}
