@@ -40,7 +40,9 @@ A full-stack application for managing an underground warehouse with a manipulato
 - **Frontend**: Polls API for state updates every 1-2 seconds.
 
 ## Usage
-- **Login**: Enter any username/password.
+- **Login**: Frontend accepts any credentials (mock). Backend has hardcoded users in `User.php`:
+  - `admin` / `admin` (Token: `100-token`)
+  - `demo` / `demo` (Token: `101-token`)
 - **Control Panel**: Enter commands like `5P3B`. Note: Implementation uses char-by-char execution.
 - **Commands**:
   - `В` / `U`: Up (Y+)
