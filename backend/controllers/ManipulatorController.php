@@ -32,7 +32,7 @@ class ManipulatorController extends Controller
         }
 
         $service = new ManipulatorService();
-        $service->executeCommands($commands); // This logs to History
+        $service->executeCommands($commands);
 
         return [
             'status' => 'success',

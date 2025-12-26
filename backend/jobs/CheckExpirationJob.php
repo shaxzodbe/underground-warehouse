@@ -14,8 +14,6 @@ class CheckExpirationJob extends BaseObject implements JobInterface
 
     public function execute($queue)
     {
-        // Find all samples that are past their expiration time AND are not yet marked expired
-        // Condition: expires_at < NOW AND status != 'expired' AND type='cooling'
         $expiredSamples = Sample::find()
             ->where(['type' => Sample::TYPE_COOLING])
             ->andWhere(['not', ['expires_at' => null]])
@@ -30,7 +28,6 @@ class CheckExpirationJob extends BaseObject implements JobInterface
             }
         }
 
-        // Re-schedule self to run again in 5 seconds (Simple loop)
         Yii::$app->queue->delay(5)->push(new self());
     }
 }

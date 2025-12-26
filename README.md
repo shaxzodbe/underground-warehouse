@@ -21,16 +21,8 @@ A full-stack application for managing an underground warehouse with a manipulato
    ```bash
    docker compose up -d --build
    ```
-3. **Initialize the Backend:**
-   Applying migrations and starting the expiration monitoring job is required.
-   ```bash
-   # Apply Migrations
-   docker compose exec backend php yii migrate --interactive=0
-   
-   # Start Monitoring Job
-   docker compose exec backend php yii job/start
-   ```
-4. **Access the Application:**
+3. **Access the Application:**
+   The backend automatically applies migrations and starts the background worker on boot.
    - **Frontend**: [http://localhost:3883](http://localhost:3883)
    - **Backend API**: [http://localhost:3884](http://localhost:3884)
 

@@ -15,7 +15,7 @@ class m231225_120001_create_history_table extends Migration
         $this->createTable('{{%history}}', [
             'id' => $this->primaryKey(),
             'action' => $this->string()->notNull(),
-            'details' => $this->text(), // JSON data
+            'details' => $this->text(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 

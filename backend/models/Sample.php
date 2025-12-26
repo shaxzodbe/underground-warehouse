@@ -5,11 +5,6 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 
-namespace app\models;
-
-use Yii;
-use yii\db\ActiveRecord;
-
 class Sample extends ActiveRecord
 {
     const TYPE_NORMAL = 'normal';
@@ -36,5 +31,27 @@ class Sample extends ActiveRecord
             ['type', 'in', 'range' => [self::TYPE_NORMAL, self::TYPE_COOLING]],
             ['status', 'in', 'range' => [self::STATUS_STORED, self::STATUS_HELD, self::STATUS_DROPPED, self::STATUS_EXPIRED]],
         ];
+    }
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        // Logic: If Cooling AND outside Fridge (3x3) -> Set Expiration
+        // Fridge is (0,0) to (2,2) -> x < 3 && y < 3
+        if ($this->type === self::TYPE_COOLING && $this->status !== self::STATUS_EXPIRED) {
+            $inFridge = ($this->x < 3 && $this->y < 3);
+
+            if ($inFridge) {
+                $this->expires_at = null;
+            } else {
+                if (empty($this->expires_at)) {
+                    $this->expires_at = date('Y-m-d H:i:s', time() + 30);
+                }
+            }
+        }
+
+        return true;
     }
 }

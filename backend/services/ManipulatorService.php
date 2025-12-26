@@ -13,13 +13,11 @@ class ManipulatorService extends Component
 {
     private $redis;
 
-    // Grid bounds
     const MAX_X = 10;
     const MAX_Y = 10;
     const FRIDGE_W = 3;
     const FRIDGE_H = 3;
 
-    // Sample Max Lifetime outside fridge (seconds)
     const SAMPLE_LIFETIME = 30;
 
     public function init()
@@ -41,8 +39,6 @@ class ManipulatorService extends Component
         if ($isInFridge) {
             $sample->expires_at = null;
         } else {
-            // If already expiring, keep the original time?
-            // "If outside > N seconds".
             if (!$sample->expires_at) {
                 $sample->expires_at = date('Y-m-d H:i:s', time() + self::SAMPLE_LIFETIME);
             }
@@ -55,13 +51,12 @@ class ManipulatorService extends Component
         return [
             'x' => (int) ($this->redis->get('manipulator:x') ?? 0),
             'y' => (int) ($this->redis->get('manipulator:y') ?? 0),
-            'holding' => $this->redis->get('manipulator:holding'), // sample_id or null
+            'holding' => $this->redis->get('manipulator:holding'),
         ];
     }
 
     public function executeCommands(string $commands)
     {
-        // Parse using Regex: (\d*)([^\d]) matches "5R", "R", "10U"
         preg_match_all('/(\d*)([^\d])/u', $commands, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
@@ -93,7 +88,7 @@ class ManipulatorService extends Component
                         break;
                     case 'Б':
                     case 'B':
-                    case 'E': // Eject
+                    case 'E':
                         $this->drop();
                         break;
                 }
@@ -109,7 +104,7 @@ class ManipulatorService extends Component
 
         // Boundary check
         if ($newX < 0 || $newX >= self::MAX_X || $newY < 0 || $newY >= self::MAX_Y) {
-            return; // Ignore invalid move
+            return;
         }
 
         // Check Fridge Transition
@@ -117,14 +112,11 @@ class ManipulatorService extends Component
         $newFridge = $this->inFridge($newX, $newY);
 
         if ($state['holding']) {
-            // Update held sample expiration
-            // If checking constantly is expensive, we only check on boundary cross?
             if ($wasFridge !== $newFridge) {
                 $sample = Sample::findOne($state['holding']);
                 if ($sample) {
                     $this->updateExpiration($sample, $newFridge);
                 } else {
-                    // Handle broken state?
                     $this->redis->del('manipulator:holding');
                 }
             }
@@ -146,10 +138,9 @@ class ManipulatorService extends Component
     {
         $state = $this->getState();
         if ($state['holding']) {
-            return; // Already holding
+            return;
         }
 
-        // Find sample at current x,y
         $sample = Sample::findOne(['x' => $state['x'], 'y' => $state['y'], 'status' => Sample::STATUS_STORED]);
         if ($sample) {
             $sample->status = Sample::STATUS_HELD;
@@ -157,11 +148,7 @@ class ManipulatorService extends Component
             $this->redis->set('manipulator:holding', $sample->id);
             $this->dispatchHistory('pick', ['sample_id' => $sample->id]);
 
-            // Update Expiration based on current location
             $this->updateExpiration($sample, $this->inFridge($state['x'], $state['y']));
-
-            // Dispatch expiration monitor job? 
-            // We rely on periodic checker for simpler architecture, or the expiration field itself. A checker job can run every few seconds and check for (expires_at < NOW).
         }
     }
 
@@ -186,26 +173,22 @@ class ManipulatorService extends Component
                 ->exists();
 
             if ($occupied) {
-                // Cannot drop here
-                return; // Or throw exception
+                return;
             }
         }
 
         if ($sample) {
-            $sample->status = Sample::STATUS_STORED; // Or DROPPED? "Зона выброса — удаляет образцы".
+            $sample->status = Sample::STATUS_STORED;
             $sample->x = $state['x'];
             $sample->y = $state['y'];
 
-            // Update expiration (if dropped inside fridge, clear it)
-            if ($sample->status !== Sample::STATUS_DROPPED) { // Only if not destroyed
+            if ($sample->status !== Sample::STATUS_DROPPED) {
                 $this->updateExpiration($sample, $this->inFridge($state['x'], $state['y']));
             }
 
-            // Check if Dropped in Disposal Zone (e.g. Max X, Max Y?)
-            // "Зона выброса". Let's define it as (MAX_X-1, MAX_Y-1).
             if ($state['x'] === self::MAX_X - 1 && $state['y'] === self::MAX_Y - 1) {
-                $sample->status = Sample::STATUS_DROPPED; // Removed
-                $sample->delete(); // Or soft delete (Requirement "удаляет из базы")
+                $sample->status = Sample::STATUS_DROPPED;
+                $sample->delete();
                 $this->dispatchHistory('destroy', ['sample_id' => $sample->id]);
             } else {
                 $sample->save();
@@ -218,8 +201,6 @@ class ManipulatorService extends Component
 
     private function dispatchHistory($action, $details)
     {
-        // Requirement: "Любое перемещение или создание образца формирует задачу в yii2-queue."
-        // We queue the history logging as a proxy for "The Task".
         Yii::$app->queue->push(new HistoryJob([
             'action' => $action,
             'details' => $details
@@ -233,9 +214,9 @@ class ManipulatorService extends Component
 
         $len = mb_strlen($commands);
         if ($len <= 4)
-            return $commands; // Optimization
+            return $commands;
 
-        // Simple recursive RLE compressor
+
         $best = $commands;
 
         for ($subLen = 1; $subLen <= $len / 2; $subLen++) {

@@ -42,7 +42,6 @@ export const ControlPanel: React.FC = () => {
 
     return (
         <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
-            {/* Command Section */}
             <Paper sx={{ p: 2 }}>
                 <Typography variant="h6">Manipulator Control</Typography>
                 <Box sx={{ display: 'flex', gap: 2, my: 2 }}>
@@ -58,7 +57,7 @@ export const ControlPanel: React.FC = () => {
                 {compressed && <Typography>Last Compressed: <strong>{compressed}</strong></Typography>}
             </Paper>
 
-            {/* Sample Creation */}
+
             <Paper sx={{ p: 2 }}>
                 <Typography variant="h6">Manage Samples</Typography>
                 <form onSubmit={handleSubmit(handleCreateSample)}>
@@ -99,7 +98,7 @@ export const ControlPanel: React.FC = () => {
                 </Table>
             </Paper>
 
-            {/* Stats/History */}
+
             <Paper sx={{ p: 2, maxHeight: 300, overflow: 'auto' }}>
                 <Typography variant="h6">Operation History</Typography>
                 <Table size="small">

@@ -9,9 +9,6 @@ use yii\filters\VerbFilter;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -38,9 +35,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -51,5 +45,27 @@ class SiteController extends Controller
                 'class' => 'yii\rest\OptionsAction',
             ],
         ];
+    }
+
+    public function actionLogin()
+    {
+        $username = Yii::$app->request->post('username');
+        $password = Yii::$app->request->post('password');
+
+        if (!$username || !$password) {
+            Yii::$app->response->statusCode = 400;
+            return ['error' => 'Username and password are required'];
+        }
+
+        $user = \app\models\User::findByUsername($username);
+        if ($user && $user->validatePassword($password)) {
+            return [
+                'token' => $user->accessToken,
+                'username' => $user->username,
+            ];
+        }
+
+        Yii::$app->response->statusCode = 401;
+        return ['error' => 'Incorrect username or password'];
     }
 }
